@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\ApiAuthController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/register', [ApiAuthController::class, 'register'])->name('register.auth.api');
+    Route::post('/login', [ApiAuthController::class, 'login'])->name('login.auth.api');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout.auth.api');
+        Route::get('/user', [ApiAuthController::class, 'user'])->name('user.auth.api');
+    });
+});
+Route::middleware('auth:sanctum')->prefix('message')->group(function () {
+    Route::post('/send', [MessageController::class, 'send'])->name('send.message.api');
+    Route::post('/send-direct-msg', [MessageController::class, 'sendDirectMsg'])->name('sendDirectMsg.message.api');
 });
