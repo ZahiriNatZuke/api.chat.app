@@ -29,7 +29,8 @@ class DirectMessageEvents implements ShouldBroadcast
         $this->response = [
             'message' => $message,
             'to' => $to,
-            'from' => auth()->user()
+            'from' => auth()->user(),
+            'date' => now()->toDateTime()
         ];
     }
 

@@ -15,6 +15,7 @@ class ChatEvents implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
     public $from;
+    public $date;
 
     /**
      * Create a new event instance.
@@ -25,6 +26,7 @@ class ChatEvents implements ShouldBroadcast
     {
         $this->message = $message;
         $this->from = auth()->user()->name;
+        $this->date = now()->toDateTime();
     }
 
     /**

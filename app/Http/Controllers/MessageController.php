@@ -13,7 +13,8 @@ class MessageController extends Controller
         broadcast(new ChatEvents($request->get('message')))->toOthers();
 
         return response()->json([
-            'status' => 'Message sent successfully!'
+            'status' => 'Message sent successfully!',
+            'date' => now()->toDateTime()
         ], 200);
     }
 
@@ -25,7 +26,8 @@ class MessageController extends Controller
         event(new DirectMessageEvents($message, $to));
 
         return response()->json([
-            'status' => 'Direct Message sent successfully!'
+            'status' => 'Direct Message sent successfully!',
+            'date' => now()->toDateTime()
         ], 200);
     }
 }
