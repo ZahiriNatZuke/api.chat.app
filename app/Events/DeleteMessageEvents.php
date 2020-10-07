@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatEvents implements ShouldBroadcast
+class DeleteMessageEvents implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,19 +22,16 @@ class ChatEvents implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
+     * @param $channel
      * @param $hash
-     * @param $message
-     * @param $date
-     * @param null $reference
+     * @param $from
      */
-    public function __construct($hash, $message, $date, $reference = null)
+    public function __construct($channel, $hash, $from)
     {
         $this->response = [
+            'channel' => $channel,
             'hash' => $hash,
-            'message' => $message,
-            'from' => auth()->user(),
-            'date' => $date,
-            'reference' => $reference,
+            'from' => $from
         ];
     }
 
@@ -45,6 +42,6 @@ class ChatEvents implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-chat');
+        return new PrivateChannel('channel-delete');
     }
 }
