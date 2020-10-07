@@ -25,6 +25,7 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 Route::middleware('auth:sanctum')->prefix('message')->group(function () {
-    Route::post('/send', [MessageController::class, 'send'])->name('send.message.api');
+    Route::post('/send-public-msg', [MessageController::class, 'sendPublicMsg'])->name('sendPublicMsg.message.api');
     Route::post('/send-direct-msg', [MessageController::class, 'sendDirectMsg'])->name('sendDirectMsg.message.api');
+    Route::post('/delete-msg', [MessageController::class, 'deleteMsg'])->name('deleteMsg.message.api');
 });

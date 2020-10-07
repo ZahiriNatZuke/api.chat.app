@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class DirectMessageEvents implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     /**
      * @var array
      */
@@ -21,16 +22,21 @@ class DirectMessageEvents implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
+     * @param $hash
      * @param $message
      * @param $to
+     * @param $date
+     * @param null $reference
      */
-    public function __construct($message, $to)
+    public function __construct($hash, $message, $to, $date, $reference = null)
     {
         $this->response = [
+            'hash' => $hash,
             'message' => $message,
-            'to' => $to,
             'from' => auth()->user(),
-            'date' => now()->toDateTime()
+            'to' => $to,
+            'date' => $date,
+            'reference' => $reference,
         ];
     }
 

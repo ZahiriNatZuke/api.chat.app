@@ -24,3 +24,7 @@ Broadcast::channel('channel-chat', function ($user) {
 Broadcast::channel('channel-direct.{id}', function ($user, $id) {
     return (int)$user->id === (int)$id;
 });
+
+Broadcast::channel('channel-delete', function ($user) {
+    return $user;
+});
